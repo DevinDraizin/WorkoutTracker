@@ -49,14 +49,13 @@ export class Database {
   async prepareAndExecute<T>(
     sql: string,
     params: Record<string, any>
-  ): Promise<{ lastInsertRowId: number; changes: number; rows?: T[] }> {
+  ): Promise<T[]> {
     let statement: SQLite.SQLiteStatement | null = null;
     try {
       statement = await this.db.prepareAsync(sql);
-      const result = await statement.executeAsync(params);
-      // result.resetAsync()
-      console.log((await result.getAllAsync()).forEach((row) => console.log(row)))
-      return result;
+      const preResult = await statement.executeAsync(params);
+      const result = await preResult.getAllAsync();
+      return result as T[];
     } finally {
       if (statement) {
         await statement.finalizeAsync();

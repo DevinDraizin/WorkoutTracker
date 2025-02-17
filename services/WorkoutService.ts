@@ -41,21 +41,30 @@ export class WorkoutService {
       }
     }
   
-    async createMovement(movement: Omit<Movement, 'id'>): Promise<number> {
+    // async createMovement(movement: Omit<Movement, 'id'>): Promise<number> {
+    //   try {
+    //     const movementId = await this.movementRepository.createMovement(movement);
+    //     console.log(movementId)
+    //     console.log("Movement created successfully");
+    //     return movementId
+    //   } catch (error) {
+    //     throw new Error(`Failed to create movement: ${error}`);
+    //   }
+    // }
+
+    async getMovement(id: number): Promise<Movement[] | null> {
       try {
-        const movementId = await this.movementRepository.createMovement(movement);
-        console.log(movementId)
-        console.log("Movement created successfully");
-        return movementId
+        const workout = await this.movementRepository.getMovement(id)
+        return workout
       } catch (error) {
-        throw new Error(`Failed to create movement: ${error}`);
+        throw new Error(`Failed to get workout: ${error}`);
       }
     }
 
-    async getMovement(id: number): Promise<Movement | null> {
+    async getAllMovements(): Promise<Movement[] | null> {
       try {
-        const workout = await this.movementRepository.getMovement(id)
-        return workout;
+        const workout = await this.movementRepository.getAllMovements()
+        return workout
       } catch (error) {
         throw new Error(`Failed to get workout: ${error}`);
       }

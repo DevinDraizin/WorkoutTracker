@@ -1,31 +1,31 @@
-import WTButton, { ButtonVariant } from "@/components/WTCore/WTButton";
-import { DatabaseService } from "@/services/DatabaseService";
-import { WorkoutService } from "@/services/WorkoutService";
-import { Movement } from "@/Types/DBTypes";
-import { useRouter } from "expo-router";
-import { useEffect, useState } from "react";
-import { View, Text} from "react-native";
-import * as FileSystem from 'expo-file-system';
+import WTButton, { ButtonVariant } from "@/components/WTCore/WTButton"
+import { DatabaseService } from "@/services/DatabaseService"
+import { WorkoutService } from "@/services/WorkoutService"
+import { Movement } from "@/Types/DBTypes"
+import { useRouter } from "expo-router"
+import { useEffect, useState } from "react"
+import { View, Text} from "react-native"
+import * as FileSystem from 'expo-file-system'
 
 export default function Index() {
   const router = useRouter()
-  const [isDbReady, setIsDbReady] = useState(false);
+  const [isDbReady, setIsDbReady] = useState(false)
 
   useEffect(() => {
     const initDatabase = async () => {
       try {
-        console.log('Initializing database...');
-        const dbService = DatabaseService.getInstance();
-        await dbService.initialize();
-        setIsDbReady(true);
-        console.log('Database initialized successfully.');
+        console.log('Initializing database...')
+        const dbService = DatabaseService.getInstance()
+        await dbService.initialize()
+        setIsDbReady(true)
+        console.log('Database initialized successfully.')
       } catch (error) {
-        console.error('Failed to initialize database:', error);
+        console.error('Failed to initialize database:', error)
       }
-    };
+    }
 
-    initDatabase();
-  }, []);
+    initDatabase()
+  }, [])
 
   if (!isDbReady) {
     return (
@@ -38,7 +38,7 @@ export default function Index() {
       >
         <Text>Loading...</Text>
       </View>
-    );
+    )
   } else {
     return (
     <View
@@ -61,22 +61,22 @@ export default function Index() {
             name: 'TestName',
             setType: 'TestSetType',
           } as Movement
-          WorkoutService.getInstance().createMovement(a)
+          // WorkoutService.getInstance().createMovement(a)
         }}
         variant={ButtonVariant.Primary}
       ></WTButton>
       <WTButton
         title="Add / Edit Movement"
         onPress={() => {
-          const a: Promise<Movement | null> = WorkoutService.getInstance().getMovement(1) ??  {
+          const a: Promise<Movement[] | null> = WorkoutService.getInstance().getAllMovements() ??  [{
             id: 9,
             name: 'FAKE',
             setType: 'FAKE',
-          }
-          a.then(x => {
-            console.log(x ? x.name : 'NULL')
+          }]
+          a.then((movment) => {
+            console.log(movment)
           })
-          console.log(FileSystem.documentDirectory); 
+          console.log(FileSystem.documentDirectory)
         }}
         variant={ButtonVariant.Primary}
       ></WTButton>
