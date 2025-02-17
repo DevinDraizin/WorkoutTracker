@@ -2,7 +2,7 @@ import { Database } from "@/db/Database";
 import { CardioSetDetails, StandardSetDetails, WTSet } from "@/Types/DBTypes";
 
 export class SetRepository {
-  constructor(private db: Database) {}
+  constructor(private readonly db: Database) {}
 
   async createSet(set: Omit<WTSet, 'id'>): Promise<number> {
     try {

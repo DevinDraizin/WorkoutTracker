@@ -5,9 +5,9 @@ import { Workout, WTSet } from "@/Types/DBTypes";
 
 export class WorkoutService {
     constructor(
-      private workoutRepository: WorkoutRepository,
-      private setRepository: SetRepository,
-      private movementRepository: MovementRepository
+      private readonly workoutRepository: WorkoutRepository,
+      private readonly setRepository: SetRepository,
+      private readonly movementRepository: MovementRepository
     ) {}
   
     async createWorkoutWithSets(

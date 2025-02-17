@@ -2,7 +2,7 @@ import { Database } from "@/db/Database";
 import { Movement } from "@/Types/DBTypes";
 
 export class MovementRepository {
-    constructor(private db: Database) {}
+    constructor(private readonly db: Database) {}
   
     async createMovement(movement: Omit<Movement, 'id'>): Promise<number> {
       try {

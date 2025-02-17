@@ -2,7 +2,7 @@ import { Database } from "@/db/Database";
 import { Workout } from "@/Types/DBTypes";
 
 export class WorkoutRepository {
-    constructor(private db: Database) {}
+    constructor(private readonly db: Database) {}
   
     async createWorkout(workout: Omit<Workout, 'id'>): Promise<number> {
       try {

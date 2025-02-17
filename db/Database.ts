@@ -1,7 +1,7 @@
 import * as SQLite from 'expo-sqlite';
 
 export class Database {
-  private db: SQLite.SQLiteDatabase;
+  private readonly db: SQLite.SQLiteDatabase;
 
   constructor() {
     this.db = SQLite.openDatabaseSync('workout_tracker.db')
