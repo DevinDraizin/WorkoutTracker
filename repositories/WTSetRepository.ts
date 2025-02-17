@@ -1,8 +1,8 @@
-import { Database } from "@/db/Database";
+import { DatabaseService } from "@/services/DatabaseService";
 import { CardioSetDetails, StandardSetDetails, WTSet } from "@/Types/DBTypes";
 
-export class SetRepository {
-  constructor(private readonly db: Database) {}
+export class WTSetRepository {
+  db = DatabaseService.getInstance().getDatabase();
 
   async createSet(set: Omit<WTSet, 'id'>): Promise<number> {
     try {

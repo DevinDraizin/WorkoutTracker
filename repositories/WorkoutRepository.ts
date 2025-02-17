@@ -1,8 +1,8 @@
-import { Database } from "@/db/Database";
+import { DatabaseService } from "@/services/DatabaseService";
 import { Workout } from "@/Types/DBTypes";
 
 export class WorkoutRepository {
-    constructor(private readonly db: Database) {}
+    db = DatabaseService.getInstance().getDatabase();
   
     async createWorkout(workout: Omit<Workout, 'id'>): Promise<number> {
       try {

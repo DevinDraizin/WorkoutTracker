@@ -1,8 +1,8 @@
-import { Database } from "@/db/Database";
+import { DatabaseService } from "@/services/DatabaseService";
 import { Movement } from "@/Types/DBTypes";
 
 export class MovementRepository {
-    constructor(private readonly db: Database) {}
+    db = DatabaseService.getInstance().getDatabase();
   
     async createMovement(movement: Omit<Movement, 'id'>): Promise<number> {
       try {

@@ -1,8 +1,11 @@
 import WTButton, { ButtonVariant } from "@/components/WTCore/WTButton";
 import { DatabaseService } from "@/services/DatabaseService";
+import { WorkoutService } from "@/services/WorkoutService";
+import { Movement } from "@/Types/DBTypes";
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { View, Text} from "react-native";
+import * as FileSystem from 'expo-file-system';
 
 export default function Index() {
   const router = useRouter()
@@ -52,12 +55,27 @@ export default function Index() {
       ></WTButton>
       <WTButton
         title="View Workouts"
-        onPress={() => {}}
+        onPress={() => {
+          const a = {
+            id: 1,
+            name: 'TestName',
+            setType: 'TestSetType',
+          } as Movement
+          WorkoutService.getInstance().createMovement(a)
+        }}
         variant={ButtonVariant.Primary}
       ></WTButton>
       <WTButton
         title="Add / Edit Movement"
-        onPress={() => {}}
+        onPress={() => {
+          const a: Promise<Movement | null> = WorkoutService.getInstance().getMovement(1) ??  {
+            id: 9,
+            name: 'FAKE',
+            setType: 'FAKE',
+          }
+          console.log(a.then(x => x ? x.name : 'null'))
+          console.log(FileSystem.documentDirectory); 
+        }}
         variant={ButtonVariant.Primary}
       ></WTButton>
     </View>
