@@ -1,9 +1,27 @@
 import WTButton, { ButtonVariant } from "@/components/WTCore/WTButton";
+import { DatabaseService } from "@/services/DatabaseService";
 import { useRouter } from "expo-router";
+import { useEffect, useState } from "react";
 import { View } from "react-native";
 
 export default function Index() {
   const router = useRouter()
+  const [isDbReady, setIsDbReady] = useState(false);
+
+  useEffect(() => {
+    const initDatabase = async () => {
+      try {
+        const dbService = DatabaseService.getInstance();
+        await dbService.initialize();
+        setIsDbReady(true);
+      } catch (error) {
+        console.error('Failed to initialize database:', error);
+      }
+    };
+
+    initDatabase();
+  }, []);
+
   return (
     <View
       style={{
