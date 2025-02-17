@@ -2,7 +2,7 @@ import { Database } from "@/db/Database";
 
 export class DatabaseService {
     private static instance: DatabaseService;
-    private db: Database;
+    private readonly db: Database;
     private isInitialized: boolean = false;
   
     private constructor() {
