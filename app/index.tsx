@@ -73,7 +73,9 @@ export default function Index() {
             name: 'FAKE',
             setType: 'FAKE',
           }
-          console.log(a.then(x => x ? x.name : 'null'))
+          a.then(x => {
+            console.log(x ? x.name : 'NULL')
+          })
           console.log(FileSystem.documentDirectory); 
         }}
         variant={ButtonVariant.Primary}

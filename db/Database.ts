@@ -54,6 +54,8 @@ export class Database {
     try {
       statement = await this.db.prepareAsync(sql);
       const result = await statement.executeAsync(params);
+      // result.resetAsync()
+      console.log((await result.getAllAsync()).forEach((row) => console.log(row)))
       return result;
     } finally {
       if (statement) {

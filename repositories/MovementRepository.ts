@@ -22,11 +22,14 @@ export class MovementRepository {
     async getMovement(id: number): Promise<Movement | null> {
       try {
         const result = await this.db.prepareAndExecute<Movement>(
-          'SELECT id, name, set_type as setType FROM movements WHERE id = $id;',
+          'SELECT * FROM movements WHERE id = $id;',
           { $id: id }
         );
+        // console.log(result.getFirstAsync())
   
         if (!result.rows || result.rows.length === 0) {
+          console.log(result)
+          console.log('No rows found for movement with ID:', id);
           return null;
         }
   
