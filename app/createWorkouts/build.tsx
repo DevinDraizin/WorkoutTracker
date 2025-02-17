@@ -11,24 +11,23 @@ export default function BuildWorkout() {
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Build Workout</Text>
-      <WTDropdown label={'Movement'} values={buildWtDropDownOptions(workoutMovements[type])} onChange={function (value: string): void {} } ></WTDropdown>
-
+      <WTDropdown label={'Movement'} values={buildWtDropDownOptions(workoutMovements[type])} onChange={function (value: string): void {} } />
       <WTButton
         title='Add New Set'
         onPress={() =>  {}}
         variant={ButtonVariant.Secondary}
-      ></WTButton>
+      />
       <WTButton
         title='Next Movement'
         onPress={() =>  {}}
         variant={ButtonVariant.Secondary}
         disabled={true}
-      ></WTButton>
+      />
       <WTButton
         title='Complete Workout'
         onPress={() =>  {}}
         variant={ButtonVariant.Primary}
-      ></WTButton>
+      />
     </View>
   );
 }
