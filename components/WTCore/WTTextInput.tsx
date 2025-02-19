@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { 
   TextInput, 
   StyleSheet, 
@@ -8,12 +8,13 @@ import {
 
 interface WTTextInputProps {
   prompt: string,
-  onChange: (value: string, valid: boolean) => void
+  value: string,
+  numberInput: boolean,
+  onChange: (value: string) => void
 }
 
 const WTTextInput: React.FC<WTTextInputProps> = (componentProps: WTTextInputProps) => {
   const [isValid, setIsValid] = useState<boolean>(true)
-  const [value, setValue] = useState<string>('');
 
   const validateInput = (text: string): boolean => {
     if (text === '') return true; // Empty input is considered valid for UX
@@ -23,12 +24,12 @@ const WTTextInput: React.FC<WTTextInputProps> = (componentProps: WTTextInputProp
     return regex.test(text);
   }
 
-  const handleChangeText = (text: string) => {
-    const valid: boolean = validateInput(text)
-    setValue(text)
-    setIsValid(valid)
-    componentProps.onChange(text, valid)
-  }
+  useEffect(() => {
+    if(componentProps.numberInput) {
+      setIsValid(validateInput(componentProps.value))
+    }
+  }, [componentProps.value])
+
 
   return (
     <View style={styles.container}>
@@ -37,8 +38,8 @@ const WTTextInput: React.FC<WTTextInputProps> = (componentProps: WTTextInputProp
           styles.input,
           !isValid && styles.invalidInput,
         ]}
-        value={value}
-        onChangeText={handleChangeText}
+        value={componentProps.value}
+        onChangeText={componentProps.onChange}
         placeholder={componentProps.prompt}
         keyboardType="numeric"
         placeholderTextColor="#999"

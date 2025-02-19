@@ -1,6 +1,5 @@
 import WTButton, { ButtonVariant } from "@/components/WTCore/WTButton"
 import { DatabaseService } from "@/services/DatabaseService"
-import { WorkoutService } from "@/services/WorkoutService"
 import { Movement } from "@/Types/DBTypes"
 import { useRouter } from "expo-router"
 import { useEffect, useState } from "react"
@@ -62,21 +61,14 @@ export default function Index() {
             setType: 'TestSetType',
           } as Movement
           // WorkoutService.getInstance().createMovement(a)
+          console.log(FileSystem.documentDirectory)
         }}
         variant={ButtonVariant.Primary}
       ></WTButton>
       <WTButton
         title="Add / Edit Movement"
         onPress={() => {
-          const a: Promise<Movement[] | null> = WorkoutService.getInstance().getAllMovements() ??  [{
-            id: 9,
-            name: 'FAKE',
-            setType: 'FAKE',
-          }]
-          a.then((movment) => {
-            console.log(movment)
-          })
-          console.log(FileSystem.documentDirectory)
+          router.push("/AddEditMovements")
         }}
         variant={ButtonVariant.Primary}
       ></WTButton>
