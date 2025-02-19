@@ -22,6 +22,7 @@ export class Database {
         CREATE TABLE IF NOT EXISTS movements (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           name TEXT NOT NULL,
+          workout_type TEXT NOT NULL,
           set_type TEXT NOT NULL
         );
       `);

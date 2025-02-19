@@ -16,6 +16,7 @@ export interface Workout {
   export interface Movement {
     id: number;
     name: string;
+    workoutType: string;
     setType: string;
   }
   
