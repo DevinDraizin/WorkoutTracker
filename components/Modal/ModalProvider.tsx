@@ -1,5 +1,3 @@
-// ModalProvider.tsx
-
 import React, { createContext, useState, useCallback, useMemo } from 'react';
 import { Modal, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { ModalManager, ModalConfig, ModalType } from './ModalManager';

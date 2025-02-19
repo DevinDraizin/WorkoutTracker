@@ -1,5 +1,3 @@
-// ModalManager.ts
-
 export enum ModalType {
     ERROR = 'error',
     SUCCESS = 'success',

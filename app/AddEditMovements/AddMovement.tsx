@@ -32,9 +32,9 @@ export default function AddEditMovements() {
       // Check to see if movement already exists by name
     } else {
         ModalManager.show({
-            title: "Success!",
-            message: "Operation completed successfully",
-            type: ModalType.SUCCESS
+            title: "Invalid Movement",
+            message: "Please fill out all fields",
+            type: ModalType.WARNING
         })
     }
   }
