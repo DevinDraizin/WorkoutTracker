@@ -44,7 +44,7 @@ export default function CreateWorkout() {
       
       <WTButton
         title='Create Workout'
-        onPress={() => selectedType && router.push({ pathname: '/createWorkouts/build', params: { type: selectedType }})}
+        onPress={() => selectedType && router.push({ pathname: '/createWorkouts/BuildWorkout', params: { type: selectedType }})}
         disabled={!selectedType}
         variant={ButtonVariant.Primary}
       ></WTButton>

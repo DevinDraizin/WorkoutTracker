@@ -1,37 +1,22 @@
-import WTTextInput from "@/components/WTCore/WTTextInput";
-import { Movement } from "@/Types/DBTypes";
-import { useState } from "react";
-import { View, Text } from "react-native";
+import WTButton, { ButtonVariant } from "@/components/WTCore/WTButton";
+import { useRouter } from "expo-router";
+import { View } from "react-native";
 
 
 
 export default function AddEditMovements() {
-  const [name, setName] = useState<string>('')
-  const [workoutType, setWorkoutType] = useState<string>('')
-  const [setType, setSetType] = useState<string>('')
-  const [movement, setMovement] = useState<Movement>()
-
-  const handleNameChange = (value: string) => {
-    setName(value)
-  }
-
-  const handleWorkoutTypeChange = (value: string) => {
-    setWorkoutType(value)
-  }
-  
-  const handleSetTypeChange = (value: string) => {
-    setSetType(value)
-  } 
-
-
-
+  const router = useRouter()
 
   return (
-    <View>
-      <WTTextInput prompt="Name" value={name} numberInput={false} onChange={handleNameChange}/>
-      <WTTextInput prompt="Workout Type" value={workoutType} numberInput={false} onChange={handleWorkoutTypeChange}/>
-      <WTTextInput prompt="Set Type" value={setType} numberInput={false} onChange={handleSetTypeChange}/>
-      <Text>{name}</Text>
+    <View
+    style={{
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+    }}>
+      <WTButton title="Add Movement" variant={ButtonVariant.Primary} onPress={() => {router.push('/AddEditMovements/AddMovement')}} />
+      <WTButton title="Edit Movement" variant={ButtonVariant.Primary} onPress={() => {router.push('/AddEditMovements/EditMovement')}} />
+      <WTButton title="Delete Movement" variant={ButtonVariant.Primary} onPress={() => {router.push('/AddEditMovements/DeleteMovement')}} />
     </View>
   )
 }

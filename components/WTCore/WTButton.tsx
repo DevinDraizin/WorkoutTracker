@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginVertical: 10,
+    marginHorizontal: 10,
   },
   primary: {
     backgroundColor: "#007AFF",

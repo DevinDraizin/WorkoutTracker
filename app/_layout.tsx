@@ -1,3 +1,4 @@
+import { ModalProvider } from "@/components/Modal/ModalProvider";
 import { Stack } from "expo-router";
 import { Text, StyleSheet, View } from "react-native";
 
@@ -5,7 +6,8 @@ export default function RootLayout() {
 
 
   return (
-    <View style={styles.container}>
+    <ModalProvider>
+      <View style={styles.container}>
         {/* Main Navigation Stack */}
         <View style={styles.content}>
           <Stack screenOptions={{ headerTitle: "Workout Tracker" }} />
@@ -16,6 +18,8 @@ export default function RootLayout() {
           <Text style={styles.footerText}>Created By Devin Draizin</Text>
         </View>
       </View>
+    </ModalProvider>
+
   );
 }
 

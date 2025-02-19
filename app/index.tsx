@@ -40,39 +40,39 @@ export default function Index() {
     )
   } else {
     return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <WTButton
-        title="Create Workout"
-        onPress={() => {router.push("/createWorkouts")}}
-        variant={ButtonVariant.Primary}
-      ></WTButton>
-      <WTButton
-        title="View Workouts"
-        onPress={() => {
-          const a = {
-            id: 1,
-            name: 'TestName',
-            setType: 'TestSetType',
-          } as Movement
-          // WorkoutService.getInstance().createMovement(a)
-          console.log(FileSystem.documentDirectory)
+        <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
         }}
-        variant={ButtonVariant.Primary}
-      ></WTButton>
-      <WTButton
-        title="Add / Edit Movement"
-        onPress={() => {
-          router.push("/AddEditMovements")
-        }}
-        variant={ButtonVariant.Primary}
-      ></WTButton>
-    </View>
+      >
+        <WTButton
+          title="Create Workout"
+          onPress={() => {router.push("/createWorkouts")}}
+          variant={ButtonVariant.Primary}
+        ></WTButton>
+        <WTButton
+          title="View Workouts"
+          onPress={() => {
+            const a = {
+              id: 1,
+              name: 'TestName',
+              setType: 'TestSetType',
+            } as Movement
+            // WorkoutService.getInstance().createMovement(a)
+            console.log(FileSystem.documentDirectory)
+          }}
+          variant={ButtonVariant.Primary}
+        ></WTButton>
+        <WTButton
+          title="Add / Edit Movement"
+          onPress={() => {
+            router.push("/AddEditMovements")
+          }}
+          variant={ButtonVariant.Primary}
+        ></WTButton>
+        </View>
     )
   }
 
