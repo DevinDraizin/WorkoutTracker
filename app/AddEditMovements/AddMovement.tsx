@@ -1,4 +1,3 @@
-import { ModalManager, ModalType } from "@/components/Modal/ModalManager";
 import WTButton, { ButtonVariant } from "@/components/WTCore/WTButton";
 import WTDropdown from "@/components/WTCore/WTDropdown";
 import WTTextInput from "@/components/WTCore/WTTextInput";
