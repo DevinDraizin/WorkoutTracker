@@ -11,14 +11,14 @@ import {
 } from 'react-native';
 
 // Define the dropdown option interface
-interface WTDropdownOption {
+export interface WTDropdownOption {
   label: string;
   value: string;
 }
 
 // Define the component props
 interface WTDropdownProps {
-  label: string;
+  label?: string;
   values: WTDropdownOption[];
   onChange: (value: string) => void;
   placeholder?: string;
@@ -26,90 +26,92 @@ interface WTDropdownProps {
 
 const { height } = Dimensions.get('window');
 
-const WTDropdown: React.FC<WTDropdownProps> = ({ 
-  label, 
-  values, 
-  onChange, 
-  placeholder = "Select an option" 
-}) => {
+const WTDropdown: React.FC<WTDropdownProps> = (componentProps: WTDropdownProps) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedOption, setSelectedOption] = useState<WTDropdownOption | null>(null);
 
   const handleSelect = (option: WTDropdownOption) => {
     setSelectedOption(option);
-    onChange(option.value);
+    componentProps.onChange(option.value);
     setModalVisible(false);
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>{label}</Text>
-      
-      <TouchableOpacity 
-        style={styles.dropdownButton}
-        onPress={() => setModalVisible(true)}
-        activeOpacity={0.7}
-      >
-        <Text style={selectedOption ? styles.selectedText : styles.placeholderText}>
-          {selectedOption ? selectedOption.label : placeholder}
-        </Text>
-        <Text style={styles.dropdownIcon}>▼</Text>
-      </TouchableOpacity>
+        <View style={styles.expandable}>
+        {componentProps.label && (<Text style={styles.label}>{componentProps.label}</Text>)}
+        
+        <TouchableOpacity 
+          style={styles.dropdownButton}
+          onPress={() => setModalVisible(true)}
+          activeOpacity={0.7}
+        >
+          <Text style={selectedOption ? styles.selectedText : styles.placeholderText}>
+            {selectedOption ? selectedOption.label : componentProps.placeholder}
+          </Text>
+          <Text style={styles.dropdownIcon}>▼</Text>
+        </TouchableOpacity>
 
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => setModalVisible(false)}
-      >
-        <View style={styles.modalOverlay}>
-          <TouchableOpacity 
-            style={styles.modalBackdrop}
-            activeOpacity={1}
-            onPress={() => setModalVisible(false)}
-          />
-          <SafeAreaView style={styles.modalContainer}>
-            <View style={styles.modalContent}>
-              <View style={styles.modalHeader}>
-                <Text style={styles.modalHeaderText}>{label}</Text>
-                <TouchableOpacity onPress={() => setModalVisible(false)}>
-                  <Text style={styles.closeButton}>✕</Text>
-                </TouchableOpacity>
-              </View>
-              
-              <FlatList
-                data={values}
-                keyExtractor={(item) => item.value}
-                renderItem={({ item }) => (
-                  <TouchableOpacity
-                    style={[
-                      styles.optionItem,
-                      selectedOption?.value === item.value && styles.selectedItem
-                    ]}
-                    onPress={() => handleSelect(item)}
-                  >
-                    <Text 
-                      style={[
-                        styles.optionText,
-                        selectedOption?.value === item.value && styles.selectedItemText
-                      ]}
-                    >
-                      {item.label}
-                    </Text>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => setModalVisible(false)}
+        >
+          <View style={styles.modalOverlay}>
+            <TouchableOpacity 
+              style={styles.modalBackdrop}
+              activeOpacity={1}
+              onPress={() => setModalVisible(false)}
+            />
+            <SafeAreaView style={styles.modalContainer}>
+              <View style={styles.modalContent}>
+                <View style={styles.modalHeader}>
+                  <Text style={styles.modalHeaderText}>{componentProps.label}</Text>
+                  <TouchableOpacity onPress={() => setModalVisible(false)}>
+                    <Text style={styles.closeButton}>✕</Text>
                   </TouchableOpacity>
-                )}
-              />
-            </View>
-          </SafeAreaView>
-        </View>
-      </Modal>
+                </View>
+                
+                <FlatList
+                  data={componentProps.values}
+                  keyExtractor={(item) => item.value}
+                  renderItem={({ item }) => (
+                    <TouchableOpacity
+                      style={[
+                        styles.optionItem,
+                        selectedOption?.value === item.value && styles.selectedItem
+                      ]}
+                      onPress={() => handleSelect(item)}
+                    >
+                      <Text 
+                        style={[
+                          styles.optionText,
+                          selectedOption?.value === item.value && styles.selectedItemText
+                        ]}
+                      >
+                        {item.label}
+                      </Text>
+                    </TouchableOpacity>
+                  )}
+                />
+              </View>
+            </SafeAreaView>
+          </View>
+        </Modal>
+      </View>
     </View>
+    
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 20,
+    flexDirection: 'row', 
+    marginBottom: 10,
+  },
+  expandable: {
+    flex: 1, 
   },
   label: {
     fontSize: 16,

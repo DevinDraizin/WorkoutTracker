@@ -1,50 +1,86 @@
-import React, { useEffect, useState } from 'react';
-import { 
-  TextInput, 
-  StyleSheet, 
-  View, 
+import React, { useState, useCallback } from 'react'
+import {
+  TextInput,
+  StyleSheet,
+  View,
   Text,
-} from 'react-native';
+} from 'react-native'
 
 interface WTTextInputProps {
-  prompt: string,
-  value: string,
-  numberInput: boolean,
+  prompt: string
+  value: string
+  numberInput?: boolean
+  cantBeEmpty?: boolean
   onChange: (value: string) => void
 }
 
+interface ValidationState {
+  isValid: boolean
+  errorMessage: string
+}
+
 const WTTextInput: React.FC<WTTextInputProps> = (componentProps: WTTextInputProps) => {
-  const [isValid, setIsValid] = useState<boolean>(true)
+  const [validationState, setValidationState] = useState<ValidationState>({
+    isValid: true,
+    errorMessage: ''
+  })
+  const [hasBeenEdited, setHasBeenEdited] = useState(false)
 
-  const validateInput = (text: string): boolean => {
-    if (text === '') return true; // Empty input is considered valid for UX
-    
-    // Regex for positive integer or floating point
-    const regex = /^(0|[1-9]\d*)(\.\d+)?$/
-    return regex.test(text);
-  }
-
-  useEffect(() => {
-    if(componentProps.numberInput) {
-      setIsValid(validateInput(componentProps.value))
+  const validateInput = useCallback((text: string): ValidationState => {
+    // Don't show validation errors before first edit
+    if (!hasBeenEdited) {
+      return { isValid: true, errorMessage: '' }
     }
-  }, [componentProps.value])
 
+    if (componentProps.cantBeEmpty && text === '') {
+      return {
+        isValid: false,
+        errorMessage: 'This field cannot be empty'
+      }
+    }
+
+    if (componentProps.numberInput && text !== '') {
+      // Regex for positive integer or floating point
+      const regex = /^(0|[1-9]\d*)(\.\d+)?$/
+      if (!regex.test(text)) {
+        return {
+          isValid: false,
+          errorMessage: 'Please enter a positive number'
+        }
+      }
+    }
+
+    return { isValid: true, errorMessage: '' }
+  }, [componentProps.cantBeEmpty, componentProps.numberInput, hasBeenEdited])
+
+  const handleChangeText = (text: string) => {
+    if (!hasBeenEdited && text.length > 0) {
+      setHasBeenEdited(true)
+    }
+
+    const validationResult = validateInput(text)
+    setValidationState(validationResult)
+    componentProps.onChange(text)
+  }
 
   return (
     <View style={styles.container}>
       <TextInput
         style={[
           styles.input,
-          !isValid && styles.invalidInput,
+          !validationState.isValid && styles.invalidInput,
         ]}
         value={componentProps.value}
-        onChangeText={componentProps.onChange}
+        onChangeText={handleChangeText}
         placeholder={componentProps.prompt}
-        keyboardType="numeric"
+        keyboardType={componentProps.numberInput ? "numeric" : "default"}
         placeholderTextColor="#999"
       />
-      {!isValid && <Text style={styles.errorText}>Please enter a positive number</Text>}
+      {!validationState.isValid && (
+        <Text style={styles.errorText}>
+          {validationState.errorMessage}
+        </Text>
+      )}
     </View>
   )
 }
@@ -53,12 +89,6 @@ const styles = StyleSheet.create({
   container: {
     marginVertical: 10,
     width: '100%',
-  },
-  promptText: {
-    marginBottom: 8,
-    fontSize: 14,
-    fontWeight: '500',
-    color: '#333',
   },
   input: {
     paddingVertical: 12,
@@ -79,6 +109,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     marginTop: 4,
   }
-});
+})
 
 export default WTTextInput

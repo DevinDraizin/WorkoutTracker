@@ -1,10 +1,14 @@
 import { ModalManager, ModalType } from "@/components/Modal/ModalManager";
 import WTButton, { ButtonVariant } from "@/components/WTCore/WTButton";
+import WTDropdown from "@/components/WTCore/WTDropdown";
 import WTTextInput from "@/components/WTCore/WTTextInput";
 import { Movement } from "@/Types/DBTypes";
+import { buildWTDropDownLabels } from "@/utils/componentUtils";
+import { setTypes } from "@/utils/workoutUtils";
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { View } from "react-native";
+import { workoutTypes } from "../createWorkouts/workoutTypes";
 
 
 
@@ -14,7 +18,7 @@ export default function AddEditMovements() {
   const [name, setName] = useState<string>('')
   const [workoutType, setWorkoutType] = useState<string>('')
   const [setType, setSetType] = useState<string>('')
-  const [movement, setMovement] = useState<Movement>()
+  const [movement, setMovement] = useState<Movement | undefined>(undefined)
 
   useEffect(() => {
     if(name && workoutType && setType) {
@@ -24,19 +28,15 @@ export default function AddEditMovements() {
         workoutType: workoutType,
         setType: setType
       })
+    } else {
+        setMovement(undefined)
     }
   },[name, workoutType, setType])
 
   const onCreate = () => {
     if(movement) {
-      // Check to see if movement already exists by name
-    } else {
-        ModalManager.show({
-            title: "Invalid Movement",
-            message: "Please fill out all fields",
-            type: ModalType.WARNING
-        })
-    }
+      console.log(movement)
+    } 
   }
 
   return (
@@ -47,11 +47,11 @@ export default function AddEditMovements() {
         alignItems: "center",
         padding: 40,
       }}>
-      <WTTextInput prompt="Name" value={name} numberInput={false} onChange={(value) => {setName(value)}}/>
-      <WTTextInput prompt="Workout Type" value={workoutType} numberInput={false} onChange={(value) => {setWorkoutType(value)}}/>
-      <WTTextInput prompt="Set Type" value={setType} numberInput={false} onChange={(value) => {setSetType(value)}}/>
+      <WTTextInput prompt="Workout Name" value={name} cantBeEmpty={true} onChange={(value) => {setName(value)}}/>
+      <WTDropdown placeholder="Workout Type" values={buildWTDropDownLabels(workoutTypes)} onChange={(value) => {setWorkoutType(value)}}/>
+      <WTDropdown placeholder="Set Type" values={buildWTDropDownLabels(setTypes)} onChange={(value) => {setSetType(value)}}/>
       <View style={{flexDirection: 'row', marginVertical: 80,}}>
-        <WTButton title="Create" variant={ButtonVariant.Primary} onPress={onCreate} />
+        <WTButton title="Create" disabled={!movement} variant={ButtonVariant.Primary} onPress={onCreate} />
         <WTButton title="Cancel" variant={ButtonVariant.Primary} onPress={() => {router.back()}} />
       </View>
     </View>
