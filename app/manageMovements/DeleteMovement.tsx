@@ -6,14 +6,13 @@ import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { View } from "react-native";
 
-
-
 export default function DeleteMovement() {
     const [movements, setMovements] = useState<Movement[] | undefined>(undefined)
     const [selectedMovement, setSelectedMovement] = useState<string>('')
     const router = useRouter()
 
     useEffect(() => {
+        // Maybe add loading spinner if we ever slow down
         WorkoutService.getInstance().getAllMovements().then(movements => {
             setMovements(movements ? movements : undefined)
         })

@@ -11,7 +11,7 @@ import { View } from "react-native";
 
 
 
-export default function AddEditMovements() {
+export default function AddMovement() {
 
   const router = useRouter()
   const [name, setName] = useState<string>('')
@@ -47,7 +47,7 @@ export default function AddEditMovements() {
         alignItems: "center",
         padding: 40,
       }}>
-      <WTTextInput prompt="Workout Name" value={name} cantBeEmpty={true} onChange={(value) => {setName(value)}}/>
+      <WTTextInput prompt="Movement Name" value={name} cantBeEmpty={true} onChange={(value) => {setName(value)}}/>
       <WTDropdown placeholder="Workout Type" values={buildWTDropDownLabels(workoutTypes)} onChange={(value) => {setWorkoutType(value)}}/>
       <WTDropdown placeholder="Set Type" values={buildWTDropDownLabels(setTypes)} onChange={(value) => {setSetType(value)}}/>
       <View style={{flexDirection: 'row', marginVertical: 80,}}>

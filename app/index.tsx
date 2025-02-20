@@ -1,6 +1,5 @@
 import WTButton, { ButtonVariant } from "@/components/WTCore/WTButton"
 import { DatabaseService } from "@/services/DatabaseService"
-import { Movement } from "@/Types/DBTypes"
 import { useRouter } from "expo-router"
 import { useEffect, useState } from "react"
 import { View, Text} from "react-native"
@@ -61,9 +60,9 @@ export default function Index() {
           variant={ButtonVariant.Primary}
         ></WTButton>
         <WTButton
-          title="Add / Edit Movement"
+          title="Manage Movements"
           onPress={() => {
-            router.push("/AddEditMovements")
+            router.push("/manageMovements")
           }}
           variant={ButtonVariant.Primary}
         ></WTButton>
