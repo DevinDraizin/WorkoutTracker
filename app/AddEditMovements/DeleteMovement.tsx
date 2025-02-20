@@ -1,10 +1,7 @@
 import WTButton, { ButtonVariant } from "@/components/WTCore/WTButton";
 import WTDropdown, { WTDropdownOption } from "@/components/WTCore/WTDropdown";
-import WTTextInput from "@/components/WTCore/WTTextInput";
 import { WorkoutService } from "@/services/WorkoutService";
 import { Movement } from "@/Types/DBTypes";
-import { buildWTDropDownLabels } from "@/utils/componentUtils";
-import { setTypes, workoutTypes } from "@/utils/workoutUtils";
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { View } from "react-native";
