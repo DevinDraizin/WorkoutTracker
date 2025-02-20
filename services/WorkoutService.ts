@@ -57,7 +57,18 @@ export class WorkoutService {
         const workout = await this.movementRepository.getMovement(id)
         return workout
       } catch (error) {
+        ModalManager.show({title:'Error', message:'Failed to fetch movement', type:ModalType.ERROR});
         throw new Error(`Failed to get workout: ${error}`);
+      }
+    }
+
+    async deleteMovement(id: number): Promise<void> {
+      try {
+        await this.movementRepository.deleteMovement(id)
+        ModalManager.show({title:'Success', message:'Successfully deleted movement', type:ModalType.SUCCESS});
+      } catch (error) {
+        ModalManager.show({title:'Error', message:'Failed to delete movement', type:ModalType.ERROR});
+        throw new Error(`Failed to delete movement: ${error}`)
       }
     }
 
@@ -66,6 +77,7 @@ export class WorkoutService {
         const workout = await this.movementRepository.getAllMovements()
         return workout
       } catch (error) {
+        ModalManager.show({title:'Error', message:'Failed to fetch movements', type:ModalType.ERROR});
         throw new Error(`Failed to get workout: ${error}`);
       }
     }

@@ -20,6 +20,21 @@ export class MovementRepository {
         throw new Error(`Failed to create movement: ${error}`);
       }
     }
+
+    async deleteMovement(id: number): Promise<Movement[] | null> {
+      try {
+        const result = await this.db.prepareAndExecute<Movement>(
+          'DELETE FROM movements WHERE id = $id;',
+          {
+            $id: id,
+          }
+        )
+
+        return result;
+      } catch (error) {
+        throw new Error(`Failed to create movement: ${error}`);
+      }
+    }
   
     async getMovement(id: number): Promise<Movement[] | null> {
       try {

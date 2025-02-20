@@ -55,13 +55,8 @@ export default function Index() {
         <WTButton
           title="View Workouts"
           onPress={() => {
-            const a = {
-              id: 1,
-              name: 'TestName',
-              setType: 'TestSetType',
-            } as Movement
-            // WorkoutService.getInstance().createMovement(a)
             console.log(FileSystem.documentDirectory)
+            console.log(FileSystem)
           }}
           variant={ButtonVariant.Primary}
         ></WTButton>
