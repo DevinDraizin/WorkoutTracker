@@ -1,3 +1,4 @@
+import { ModalManager, ModalType } from "@/components/Modal/ModalManager";
 import { MovementRepository } from "@/repositories/MovementRepository";
 import { WorkoutRepository } from "@/repositories/WorkoutRepository";
 import { WTSetRepository } from "@/repositories/WTSetRepository";
@@ -41,16 +42,15 @@ export class WorkoutService {
       }
     }
   
-    // async createMovement(movement: Omit<Movement, 'id'>): Promise<number> {
-    //   try {
-    //     const movementId = await this.movementRepository.createMovement(movement);
-    //     console.log(movementId)
-    //     console.log("Movement created successfully");
-    //     return movementId
-    //   } catch (error) {
-    //     throw new Error(`Failed to create movement: ${error}`);
-    //   }
-    // }
+    async createMovement(movement: Omit<Movement, 'id'>): Promise<void> {
+      try {
+        await this.movementRepository.createMovement(movement);
+        ModalManager.show({title:'Success', message:'Successfully created movement', type:ModalType.SUCCESS});
+      } catch (error) {
+        ModalManager.show({title:'Error', message:'Failed to create movement', type:ModalType.ERROR});
+        throw new Error(`Failed to create movement: ${error}`)
+      }
+    }
 
     async getMovement(id: number): Promise<Movement[] | null> {
       try {

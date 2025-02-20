@@ -4,27 +4,29 @@ import { Movement } from "@/Types/DBTypes"
 export class MovementRepository {
     db = DatabaseService.getInstance().getDatabase()
   
-    // async createMovement(movement: Omit<Movement, 'id'>): Promise<number> {
-    //   try {
-    //     const result = await this.db.prepareAndExecute(
-    //       'INSERT INTO movements (name, set_type) VALUES ($name, $setType);',
-    //       {
-    //         $name: movement.name,
-    //         $setType: movement.setType
-    //       }
-    //     );
-    //     return result.lastInsertRowId;
-    //   } catch (error) {
-    //     throw new Error(`Failed to create movement: ${error}`);
-    //   }
-    // }
+    async createMovement(movement: Omit<Movement, 'id'>): Promise<Movement[] | null> {
+      try {
+        const result = await this.db.prepareAndExecute<Movement>(
+          'INSERT INTO movements (name, workout_type, set_type) VALUES ($name, $workout_type, $setType);',
+          {
+            $name: movement.name,
+            $workout_type: movement.workoutType,
+            $setType: movement.setType
+          }
+        )
+
+        return result;
+      } catch (error) {
+        throw new Error(`Failed to create movement: ${error}`);
+      }
+    }
   
     async getMovement(id: number): Promise<Movement[] | null> {
       try {
         const result = await this.db.prepareAndExecute<Movement>(
           'SELECT * FROM movements WHERE id = $id;',
           { $id: id }
-        );
+        )
   
         if (!result.length) {
           console.log('No rows found for movement with ID:', id)

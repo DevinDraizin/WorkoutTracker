@@ -2,13 +2,13 @@ import { ModalManager, ModalType } from "@/components/Modal/ModalManager";
 import WTButton, { ButtonVariant } from "@/components/WTCore/WTButton";
 import WTDropdown from "@/components/WTCore/WTDropdown";
 import WTTextInput from "@/components/WTCore/WTTextInput";
+import { WorkoutService } from "@/services/WorkoutService";
 import { Movement } from "@/Types/DBTypes";
 import { buildWTDropDownLabels } from "@/utils/componentUtils";
-import { setTypes } from "@/utils/workoutUtils";
+import { setTypes, workoutTypes } from "@/utils/workoutUtils";
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { View } from "react-native";
-import { workoutTypes } from "../createWorkouts/workoutTypes";
 
 
 
@@ -35,7 +35,8 @@ export default function AddEditMovements() {
 
   const onCreate = () => {
     if(movement) {
-      console.log(movement)
+      WorkoutService.getInstance().createMovement(movement)
+      router.back()
     } 
   }
 

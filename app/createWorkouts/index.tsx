@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { workoutTypes } from './workoutTypes';
 import WTRadioBar from '@/components/WTCore/WTRadioBar';
 import WTButton, { ButtonVariant } from '@/components/WTCore/WTButton';
+import { workoutTypes } from '@/utils/workoutUtils';
 
 export default function CreateWorkout() {
   const router = useRouter();

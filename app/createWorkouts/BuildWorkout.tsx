@@ -1,9 +1,9 @@
 import { View, Text, StyleSheet } from 'react-native'
 import { useLocalSearchParams } from 'expo-router'
-import { workoutMovements } from './workoutTypes'
 import WTDropdown from '@/components/WTCore/WTDropdown'
 import { buildWtDropDownOptions } from '@/utils/componentUtils'
 import WTButton, { ButtonVariant } from '@/components/WTCore/WTButton'
+import { workoutMovements } from '@/utils/workoutUtils'
 
 export default function BuildWorkout() {
   const { type } = useLocalSearchParams<{ type: string }>()
