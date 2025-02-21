@@ -1,5 +1,21 @@
+import { WTDropdownOption } from "@/components/WTCore/WTDropdown"
+import { Movement } from "@/Types/DBTypes"
+
 export const setTypes = ['standard', 'cardio', 'other']
 export const workoutTypes = ['push', 'pull', 'legs', 'other']
+
+export const buildMovementDropdownData = (movements: Movement[]): WTDropdownOption[] => {
+  const dropdownData: WTDropdownOption[] = []
+  if(movements) {
+      movements.map(movement => {
+          dropdownData.push({
+              label: movement.name,
+              value: movement.id.toString()
+          })
+      })
+  }
+  return dropdownData
+}
 
 export const workoutMovements: Record<string, string[]> = {
   Push: ["Bench Press", "Overhead Press", "Dips"],

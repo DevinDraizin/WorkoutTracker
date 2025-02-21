@@ -2,6 +2,7 @@ import WTButton, { ButtonVariant } from "@/components/WTCore/WTButton";
 import WTDropdown, { WTDropdownOption } from "@/components/WTCore/WTDropdown";
 import { WorkoutService } from "@/services/WorkoutService";
 import { Movement } from "@/Types/DBTypes";
+import { buildMovementDropdownData } from "@/utils/workoutUtils";
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { View } from "react-native";
@@ -18,20 +19,6 @@ export default function DeleteMovement() {
         })
     }, [])
 
-    const buildDropdownData = (): WTDropdownOption[] => {
-        const dropdownData: WTDropdownOption[] = []
-        if(movements) {
-            movements.map(movement => {
-                dropdownData.push({
-                    label: movement.name,
-                    value: movement.id.toString()
-                })
-            })
-        }
-        return dropdownData
-    }
-
-
     const onDelete = () => {
         WorkoutService.getInstance().deleteMovement(parseInt(selectedMovement))
         router.back()
@@ -47,7 +34,7 @@ export default function DeleteMovement() {
             padding: 40,
         }}>
 
-        <WTDropdown placeholder="Set Type" values={buildDropdownData()} onChange={(id) => {setSelectedMovement(id)}}/>
+        <WTDropdown placeholder="Set Type" values={buildMovementDropdownData(movements ? movements : [])} onChange={(id) => {setSelectedMovement(id)}}/>
         <View style={{flexDirection: 'row', marginVertical: 80,}}>
             <WTButton title="Delete" disabled={!selectedMovement.length} variant={ButtonVariant.Primary} onPress={onDelete} />
             <WTButton title="Cancel" variant={ButtonVariant.Primary} onPress={() => {router.back()}} />

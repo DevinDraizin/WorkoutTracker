@@ -72,6 +72,24 @@ export class MovementRepository {
       }
     }
 
+    async getMovementsByType(workoutType: string): Promise<Movement[] | null> {
+      try {
+        const result = await this.db.prepareAndExecute<Movement>(
+          'SELECT * FROM movements WHERE workout_type = $workout_type;',
+          {$workout_type: workoutType}
+        )
+
+        if (!result.length) {
+          console.log('No rows found:')
+          return null
+        }
+
+        return result
+      } catch (error) {
+        throw new Error(`Failed to get movements: ${error}`)
+      }
+    }
+
   
     async updateMovement(id: number, movement: Partial<Omit<Movement, 'id'>>): Promise<void> {
       try {

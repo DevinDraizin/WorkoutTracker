@@ -74,11 +74,21 @@ export class WorkoutService {
 
     async getAllMovements(): Promise<Movement[] | null> {
       try {
-        const workout = await this.movementRepository.getAllMovements()
-        return workout
+        const workouts = await this.movementRepository.getAllMovements()
+        return workouts
       } catch (error) {
         ModalManager.show({title:'Error', message:'Failed to fetch movements', type:ModalType.ERROR});
         throw new Error(`Failed to get workout: ${error}`);
+      }
+    }
+
+    async getMovementsByType(workoutType: string): Promise<Movement[] | null> {
+      try {
+        const workouts = await this.movementRepository.getMovementsByType(workoutType)
+        return workouts
+      } catch (error) {
+        ModalManager.show({title:'Error', message:`Failed to fetch movements for ${workoutType}`, type:ModalType.ERROR});
+        throw new Error(`Failed to fetch movements for ${workoutType}`);
       }
     }
   }

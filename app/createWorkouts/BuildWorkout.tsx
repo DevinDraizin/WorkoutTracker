@@ -1,17 +1,29 @@
 import { View, Text, StyleSheet } from 'react-native'
 import { useLocalSearchParams } from 'expo-router'
-import WTDropdown from '@/components/WTCore/WTDropdown'
+import WTDropdown, { WTDropdownOption } from '@/components/WTCore/WTDropdown'
 import { buildWtDropDownOptions } from '@/utils/componentUtils'
 import WTButton, { ButtonVariant } from '@/components/WTCore/WTButton'
-import { workoutMovements } from '@/utils/workoutUtils'
+import { buildMovementDropdownData, workoutMovements } from '@/utils/workoutUtils'
+import { useEffect, useState } from 'react'
+import { Movement } from '@/Types/DBTypes'
+import { WorkoutService } from '@/services/WorkoutService'
 
 export default function BuildWorkout() {
   const { type } = useLocalSearchParams<{ type: string }>()
+  const [movements, setMovements] = useState<Movement[]>([])
+
+  useEffect(() => {
+    WorkoutService.getInstance().getMovementsByType(type).then((movements) => {
+      if(movements) {
+        setMovements(movements)
+      }
+    })
+  }, [])
 
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Build Workout</Text>
-      <WTDropdown label={'Movement'} values={buildWtDropDownOptions(workoutMovements[type])} onChange={function (value: string): void {} } />
+      <WTDropdown placeholder='Movement' values={buildMovementDropdownData(movements ? movements : [])} onChange={function (value: string): void {} } />
       <WTButton
         title='Add New Set'
         onPress={() =>  {}}
