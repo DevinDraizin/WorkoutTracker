@@ -1,7 +1,8 @@
 export enum ModalType {
     ERROR = 'error',
     SUCCESS = 'success',
-    WARNING = 'warning'
+    WARNING = 'warning',
+    INFORMATION = 'information'
   }
   
   export interface ModalConfig {

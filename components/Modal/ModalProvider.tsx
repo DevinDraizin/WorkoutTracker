@@ -45,6 +45,8 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
         return '#4CAF50';
       case ModalType.WARNING:
         return '#FFA726';
+      case ModalType.INFORMATION:
+        return '#2196F3';
       default:
         return '#757575';
     }

@@ -1,43 +1,62 @@
-import { View, Text, StyleSheet } from 'react-native'
-import { useLocalSearchParams } from 'expo-router'
-import WTDropdown, { WTDropdownOption } from '@/components/WTCore/WTDropdown'
-import { buildWtDropDownOptions } from '@/utils/componentUtils'
+import { View, Text, StyleSheet, BackHandler } from 'react-native'
+import { useLocalSearchParams, useRouter } from 'expo-router'
+import WTDropdown from '@/components/WTCore/WTDropdown'
 import WTButton, { ButtonVariant } from '@/components/WTCore/WTButton'
-import { buildMovementDropdownData, workoutMovements } from '@/utils/workoutUtils'
+import { buildMovementDropdownData } from '@/utils/workoutUtils'
 import { useEffect, useState } from 'react'
 import { Movement } from '@/Types/DBTypes'
 import { WorkoutService } from '@/services/WorkoutService'
+import { ModalManager, ModalType } from '@/components/Modal/ModalManager'
 
 export default function BuildWorkout() {
-  const { type } = useLocalSearchParams<{ type: string }>()
+  const router = useRouter()
+  const { workoutType } = useLocalSearchParams<{ workoutType: string }>()
   const [movements, setMovements] = useState<Movement[]>([])
+  const [selectedMovement, setSelectedMovement] = useState<Movement | undefined>(undefined)
+  const [setType, setSetType] = useState<string>('')
 
   useEffect(() => {
-    WorkoutService.getInstance().getMovementsByType(type).then((movements) => {
+    WorkoutService.getInstance().getMovementsByType(workoutType).then((movements) => {
       if(movements) {
         setMovements(movements)
       }
     })
   }, [])
 
+  useEffect(() => {
+    if(selectedMovement) {
+      setSetType(selectedMovement.setType)
+    }
+  }, [selectedMovement])
+
+  const onMovementSelect = (id: string) => {
+    setSelectedMovement(movements.find(movement => movement.id === parseInt(id)) || undefined)
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Build Workout</Text>
-      <WTDropdown placeholder='Movement' values={buildMovementDropdownData(movements ? movements : [])} onChange={function (value: string): void {} } />
+      <WTDropdown placeholder='Movement' values={buildMovementDropdownData(movements ? movements : [])} onChange={onMovementSelect} />
       <WTButton
         title='Add New Set'
-        onPress={() =>  {}}
+        onPress={() =>  {
+          ModalManager.show({
+            type: ModalType.INFORMATION,
+            title: 'Test Title',
+            message:'Some example text\nWith new line\nAnother new line\nAnd then a really long line that will wrap to the next line'
+          })
+        }}
         variant={ButtonVariant.Secondary}
       />
       <WTButton
         title='Next Movement'
-        onPress={() =>  {}}
+        onPress={() =>  {router.replace('/createWorkouts/BuildWorkout')}}
         variant={ButtonVariant.Secondary}
         disabled={true}
       />
       <WTButton
         title='Complete Workout'
-        onPress={() =>  {}}
+        onPress={() =>  {router.replace('/createWorkouts/BuildWorkout')}}
         variant={ButtonVariant.Primary}
       />
     </View>

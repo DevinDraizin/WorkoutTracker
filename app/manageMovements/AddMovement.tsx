@@ -19,6 +19,7 @@ export default function AddMovement() {
   const [setType, setSetType] = useState<string>('')
   const [movement, setMovement] = useState<Movement | undefined>(undefined)
 
+
   useEffect(() => {
     if(name && workoutType && setType) {
       setMovement({

@@ -10,7 +10,7 @@ export interface Workout {
     workoutId: number;
     movementId: number;
     setType: string;
-    details: CardioSetDetails | StandardSetDetails;
+    details: CardioSetDetails | StandardSetDetails | OtherSetDetails;
   }
   
   export interface Movement {
@@ -31,6 +31,10 @@ export interface Workout {
     weight: number;
     reps: number;
     isDropset: boolean;
-    dropsetWeight?: number;
-    dropsetReps?: number;
+    dropsetWeight: number | undefined;
+    dropsetReps: number | undefined;
+  }
+
+  export interface OtherSetDetails {
+    description: string;
   }
