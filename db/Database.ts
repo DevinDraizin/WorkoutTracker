@@ -33,7 +33,7 @@ export class Database {
           workout_id INTEGER NOT NULL,
           movement_id INTEGER NOT NULL,
           set_type TEXT NOT NULL,
-          details TEXT NOT NULL,
+          details JSONB NOT NULL,
           FOREIGN KEY (workout_id) REFERENCES workouts (id),
           FOREIGN KEY (movement_id) REFERENCES movements (id)
         );
