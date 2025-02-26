@@ -4,9 +4,12 @@ import WTDropdown from '@/components/WTCore/WTDropdown'
 import WTButton, { ButtonVariant } from '@/components/WTCore/WTButton'
 import { buildMovementDropdownData } from '@/utils/workoutUtils'
 import { useEffect, useState } from 'react'
-import { Movement } from '@/Types/DBTypes'
+import { Movement, StandardSetDetails } from '@/Types/DBTypes'
 import { WorkoutService } from '@/services/WorkoutService'
 import { ModalManager, ModalType } from '@/components/Modal/ModalManager'
+import BaseSet from '@/components/BaseSet'
+import WTTextInput from '@/components/WTCore/WTTextInput'
+import StandardSet from '@/components/StandardSet'
 
 export default function BuildWorkout() {
   const router = useRouter()
@@ -37,6 +40,13 @@ export default function BuildWorkout() {
     <View style={styles.container}>
       <Text style={styles.header}>Build Workout</Text>
       <WTDropdown placeholder='Movement' values={buildMovementDropdownData(movements ? movements : [])} onChange={onMovementSelect} />
+      <StandardSet currentSet={{
+           weight: 1,
+           reps: 2,
+           isDropset: false,
+           dropsetWeight: undefined,
+           dropsetReps: undefined
+      }} />
       <WTButton
         title='Add New Set'
         onPress={() =>  {

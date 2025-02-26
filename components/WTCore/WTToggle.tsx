@@ -31,8 +31,6 @@ const WTToggle: React.FC<WTToggleProps> = (componentProps: WTToggleProps) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });
 
