@@ -7,7 +7,7 @@ export const workoutTypes = ['push', 'pull', 'legs', 'other']
 export const buildMovementDropdownData = (movements: Movement[]): WTDropdownOption[] => {
   const dropdownData: WTDropdownOption[] = []
   if(movements) {
-      movements.map(movement => {
+      movements.forEach(movement => {
           dropdownData.push({
               label: movement.name,
               value: movement.id.toString()
@@ -15,6 +15,13 @@ export const buildMovementDropdownData = (movements: Movement[]): WTDropdownOpti
       })
   }
   return dropdownData
+}
+
+export const capitalizeString = (input: string): string => {
+  if (!input) {
+    return input; // Handle empty or null input
+  }
+  return input.charAt(0).toUpperCase() + input.slice(1);
 }
 
 export const workoutMovements: Record<string, string[]> = {

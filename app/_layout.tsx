@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
   },
   footer: {
     height: 50,
-    backgroundColor: "#007AFF",
+    backgroundColor: "#161a24",
     justifyContent: "center",
     alignItems: "center",
   },

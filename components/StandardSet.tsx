@@ -19,7 +19,9 @@ const StandardSet = (componentProps: StandardSetProps) => {
     const [isComplete, setIsComplete] = useState<boolean>(false)
 
 
-    //This shit is so broken because dropSetEnabled is the key for 
+    
+    // One day I need to come back and fix this. The BaseSet component animation is fighting with the
+    // disable logic for the finish button causing visual bugs.
     const updateIsComplete = () => {
         if (dropSetEnabled) {
             setIsComplete(reps.trim() !== "" && weight.trim() !== "" && dropReps.trim() !== "" && dropWeight.trim() !== "")
@@ -30,12 +32,10 @@ const StandardSet = (componentProps: StandardSetProps) => {
 
     useEffect(() => {
         updateIsComplete()
-    }, [reps, weight, dropReps, dropWeight])
+    }, [reps, weight, dropReps, dropWeight, dropSetEnabled])
 
 
     const onDropSettToggle = () => {
-        
-        updateIsComplete()
         setDropSetEnabled(!dropSetEnabled)
     }
 

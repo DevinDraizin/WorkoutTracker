@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import { 
   View, 
   Text, 
@@ -8,33 +8,40 @@ import {
   FlatList, 
   SafeAreaView,
   Dimensions
-} from 'react-native';
+} from 'react-native'
 
 // Define the dropdown option interface
 export interface WTDropdownOption {
-  label: string;
-  value: string;
+  label: string
+  value: string
 }
 
 // Define the component props
 interface WTDropdownProps {
-  label?: string;
-  values: WTDropdownOption[];
-  onChange: (value: string) => void;
-  placeholder?: string;
+  label?: string
+  values: WTDropdownOption[]
+  onChange: (value: string) => void
+  placeholder?: string
+  disabled?: boolean
 }
 
-const { height } = Dimensions.get('window');
+const { height } = Dimensions.get('window')
 
 const WTDropdown: React.FC<WTDropdownProps> = (componentProps: WTDropdownProps) => {
-  const [modalVisible, setModalVisible] = useState(false);
-  const [selectedOption, setSelectedOption] = useState<WTDropdownOption | null>(null);
+  const [modalVisible, setModalVisible] = useState(false)
+  const [selectedOption, setSelectedOption] = useState<WTDropdownOption | null>(null)
 
   const handleSelect = (option: WTDropdownOption) => {
-    setSelectedOption(option);
-    componentProps.onChange(option.value);
-    setModalVisible(false);
-  };
+    setSelectedOption(option)
+    componentProps.onChange(option.value)
+    setModalVisible(false)
+  }
+
+  const onSelect = () => {
+    if(!componentProps.disabled) {
+      setModalVisible(true)
+    }
+  }
 
   return (
     <View style={styles.container}>
@@ -43,13 +50,13 @@ const WTDropdown: React.FC<WTDropdownProps> = (componentProps: WTDropdownProps) 
         
         <TouchableOpacity 
           style={styles.dropdownButton}
-          onPress={() => setModalVisible(true)}
-          activeOpacity={0.7}
+          onPress={onSelect}
+          activeOpacity={componentProps.disabled ? 1 : 0.7}
         >
           <Text style={selectedOption ? styles.selectedText : styles.placeholderText}>
             {selectedOption ? selectedOption.label : componentProps.placeholder}
           </Text>
-          <Text style={styles.dropdownIcon}>▼</Text>
+          <Text style={styles.dropdownIcon}>{componentProps.disabled ? "X" : "▼"}</Text>
         </TouchableOpacity>
 
         <Modal
@@ -102,8 +109,8 @@ const WTDropdown: React.FC<WTDropdownProps> = (componentProps: WTDropdownProps) 
       </View>
     </View>
     
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -199,6 +206,6 @@ const styles = StyleSheet.create({
     color: '#007AFF',
     fontWeight: '500',
   },
-});
+})
 
-export default WTDropdown;
+export default WTDropdown
