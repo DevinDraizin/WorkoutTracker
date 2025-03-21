@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     backgroundColor: '#F5F5F5',
     borderWidth: 1,
-    borderColor: '#E0E0E0',
+    borderColor: '#999',
     borderRadius: 8,
     paddingHorizontal: 16,
     paddingVertical: 12,

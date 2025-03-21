@@ -13,7 +13,6 @@ const BaseSet: React.FC<BaseSetProps> = (componentProps: BaseSetProps) => {
     const animationDuration = 300
  
     useEffect(() => {
-      console.log("ANIMATING")
         const animConfig = {
             duration: animationDuration,
             update: {
