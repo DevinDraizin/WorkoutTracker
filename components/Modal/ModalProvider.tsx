@@ -83,17 +83,17 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
             <View style={styles.buttonContainer}>
               {modalConfig?.type === ModalType.CONFIRMATION ? (
                 <>
-                  <WTButton
-                    title="No"
-                    onPress={handleCancel}
-                    variant={ButtonVariant.Secondary}
+                <WTButton
+                    title="Yes"
+                    onPress={handleConfirm}
+                    variant={ButtonVariant.Primary}
                     compact
                     style={styles.modalButton}
                   />
                   <WTButton
-                    title="Yes"
-                    onPress={handleConfirm}
-                    variant={ButtonVariant.Primary}
+                    title="No"
+                    onPress={handleCancel}
+                    variant={ButtonVariant.Secondary}
                     compact
                     style={styles.modalButton}
                   />
@@ -120,7 +120,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     gap: 12,
-    marginTop: 16,
     width: '100%',
   },
   modalButton: {

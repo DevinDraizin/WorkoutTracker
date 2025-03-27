@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 4,
   },
   textCompact: {
-    fontSize: 14,
+    fontSize: 16,
   },
   button: {
     paddingVertical: 12,
