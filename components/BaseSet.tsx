@@ -1,6 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { View, StyleSheet, ViewStyle, Animated } from 'react-native'
-import { LayoutAnimation } from 'react-native'
+import React, { useEffect } from 'react'
+import { View, StyleSheet, ViewStyle, LayoutAnimation } from 'react-native'
 
 interface BaseSetProps {
   children: React.ReactNode
