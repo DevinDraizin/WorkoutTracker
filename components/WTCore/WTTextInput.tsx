@@ -12,6 +12,7 @@ interface WTTextInputProps {
   numberInput?: boolean
   cantBeEmpty?: boolean
   onChange: (value: string) => void
+  onValidationChange?: (isValid: boolean) => void
 }
 
 interface ValidationState {
@@ -61,6 +62,7 @@ const WTTextInput: React.FC<WTTextInputProps> = (componentProps: WTTextInputProp
     const validationResult = validateInput(text)
     setValidationState(validationResult)
     componentProps.onChange(text)
+    componentProps.onValidationChange?.(validationResult.isValid)
   }
 
   return (

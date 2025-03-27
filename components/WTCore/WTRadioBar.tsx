@@ -4,8 +4,7 @@ import {
   Text, 
   TouchableOpacity, 
   StyleSheet, 
-  LayoutAnimation, 
-  Dimensions
+  LayoutAnimation
 } from 'react-native';
 
 // Define the component props
@@ -14,7 +13,7 @@ interface WTRadioBarProps {
   onChange: (value: string) => void;
 }
 
-const { width } = Dimensions.get('window');
+
 
 const WTRadioBar: React.FC<WTRadioBarProps> = (componentProps: WTRadioBarProps) => { 
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
@@ -80,7 +79,6 @@ const WTRadioBar: React.FC<WTRadioBarProps> = (componentProps: WTRadioBarProps) 
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 20,
     width: '100%',
   },
   label: {
@@ -97,8 +95,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     borderWidth: 1,
     borderColor: '#E0E0E0',
-    alignSelf: 'center',
-    width: width * 0.9,
+    width: '100%',
   },
   radioOption: {
     flex: 1,
