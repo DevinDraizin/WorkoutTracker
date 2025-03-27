@@ -28,41 +28,41 @@ const WTTextInput: React.FC<WTTextInputProps> = (componentProps: WTTextInputProp
   const [hasBeenEdited, setHasBeenEdited] = useState(false)
 
   const validateInput = useCallback((text: string): ValidationState => {
-    // Don't show validation errors before first edit
+    // For number inputs, always validate immediately
+    if (componentProps.numberInput && text !== '') {
+      const regex = /^(0|[1-9]\d*)(\.\d+)?$/;
+      if (!regex.test(text)) {
+        return {
+          isValid: false,
+          errorMessage: 'Please enter a positive number'
+        };
+      }
+    }
+
+    // For other validations, only show errors after first edit
     if (!hasBeenEdited) {
-      return { isValid: true, errorMessage: '' }
+      return { isValid: true, errorMessage: '' };
     }
 
     if (componentProps.cantBeEmpty && text === '') {
       return {
         isValid: false,
         errorMessage: 'This field cannot be empty'
-      }
+      };
     }
 
-    if (componentProps.numberInput && text !== '') {
-      // Regex for positive integer or floating point
-      const regex = /^(0|[1-9]\d*)(\.\d+)?$/
-      if (!regex.test(text)) {
-        return {
-          isValid: false,
-          errorMessage: 'Please enter a positive number'
-        }
-      }
-    }
-
-    return { isValid: true, errorMessage: '' }
+    return { isValid: true, errorMessage: '' };
   }, [componentProps.cantBeEmpty, componentProps.numberInput, hasBeenEdited])
 
   const handleChangeText = (text: string) => {
-    if (!hasBeenEdited && text.length > 0) {
-      setHasBeenEdited(true)
+    if (text.length > 0) {
+      setHasBeenEdited(true);
     }
 
-    const validationResult = validateInput(text)
-    setValidationState(validationResult)
-    componentProps.onChange(text)
-    componentProps.onValidationChange?.(validationResult.isValid)
+    const validationResult = validateInput(text);
+    setValidationState(validationResult);
+    componentProps.onChange(text);
+    componentProps.onValidationChange?.(validationResult.isValid);
   }
 
   return (
