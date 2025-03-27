@@ -1,5 +1,6 @@
 import React, { createContext, useState, useCallback, useMemo } from 'react';
-import { Modal, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { Modal, View, Text, StyleSheet } from 'react-native';
+import WTButton, { ButtonVariant } from '@/components/WTCore/WTButton';
 import { ModalManager, ModalConfig, ModalType } from './ModalManager';
 
 interface ModalContextType {
@@ -22,6 +23,16 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
     setVisible(false);
     setModalConfig(null);
   }, []);
+
+  const handleConfirm = useCallback(() => {
+    modalConfig?.onConfirm?.();
+    hideModal();
+  }, [modalConfig, hideModal]);
+
+  const handleCancel = useCallback(() => {
+    modalConfig?.onCancel?.();
+    hideModal();
+  }, [modalConfig, hideModal]);
 
   const contextValue = useMemo(
     () => ({
@@ -47,6 +58,8 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
         return '#FFA726';
       case ModalType.INFORMATION:
         return '#2196F3';
+      case ModalType.CONFIRMATION:
+        return '#084B83';
       default:
         return '#757575';
     }
@@ -67,12 +80,34 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
               {modalConfig?.title}
             </Text>
             <Text style={styles.modalMessage}>{modalConfig?.message}</Text>
-            <TouchableOpacity
-              style={[styles.button, { backgroundColor: getModalColor() }]}
-              onPress={hideModal}
-            >
-              <Text style={styles.buttonText}>OK</Text>
-            </TouchableOpacity>
+            <View style={styles.buttonContainer}>
+              {modalConfig?.type === ModalType.CONFIRMATION ? (
+                <>
+                  <WTButton
+                    title="No"
+                    onPress={handleCancel}
+                    variant={ButtonVariant.Secondary}
+                    compact
+                    style={styles.modalButton}
+                  />
+                  <WTButton
+                    title="Yes"
+                    onPress={handleConfirm}
+                    variant={ButtonVariant.Primary}
+                    compact
+                    style={styles.modalButton}
+                  />
+                </>
+              ) : (
+                <WTButton
+                  title="OK"
+                  onPress={hideModal}
+                  variant={ButtonVariant.Primary}
+                  compact
+                  style={styles.modalButton}
+                />
+              )}
+            </View>
           </View>
         </View>
       </Modal>
@@ -81,6 +116,16 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
 };
 
 const styles = StyleSheet.create({
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: 12,
+    marginTop: 16,
+    width: '100%',
+  },
+  modalButton: {
+    minWidth: 80,
+  },
   centeredView: {
     flex: 1,
     justifyContent: 'center',

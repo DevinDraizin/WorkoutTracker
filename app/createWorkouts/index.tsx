@@ -6,6 +6,7 @@ import WTRadioBar from '@/components/WTCore/WTRadioBar';
 import WTButton, { ButtonVariant } from '@/components/WTCore/WTButton';
 import WTTextInput from '@/components/WTCore/WTTextInput';
 import { workoutTypes } from '@/utils/workoutUtils';
+import { ModalManager, ModalType } from '@/components/Modal/ModalManager';
 
 export default function CreateWorkout() {
   const router = useRouter();
@@ -19,6 +20,33 @@ export default function CreateWorkout() {
   const setWorkoutType = (type: string): void => {
     setSelectedType(type);
   }
+
+  const handleCreateWorkout = () => {
+    if (!bodyWeight) {
+      ModalManager.show({
+        type: ModalType.CONFIRMATION,
+        title: 'No Body Weight',
+        message: 'Are you sure you want to continue without entering your body weight?',
+        onConfirm: () => {
+          router.push({ 
+            pathname: '/createWorkouts/BuildWorkout', 
+            params: { 
+              workoutType: selectedType,
+              bodyWeight: '0'
+            }
+          });
+        }
+      });
+    } else {
+      router.push({ 
+        pathname: '/createWorkouts/BuildWorkout', 
+        params: { 
+          workoutType: selectedType,
+          bodyWeight: bodyWeight
+        }
+      });
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -64,13 +92,7 @@ export default function CreateWorkout() {
       <View style={styles.footer}>
         <WTButton
           title='Create Workout'
-          onPress={() => selectedType && router.push({ 
-            pathname: '/createWorkouts/BuildWorkout', 
-            params: { 
-              workoutType: selectedType,
-              bodyWeight: bodyWeight || '0'
-            }
-          })}
+          onPress={handleCreateWorkout}
           disabled={!selectedType || !isBodyWeightValid}
           variant={ButtonVariant.Primary}
         />

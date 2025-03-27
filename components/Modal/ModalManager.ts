@@ -2,13 +2,16 @@ export enum ModalType {
     ERROR = 'error',
     SUCCESS = 'success',
     WARNING = 'warning',
-    INFORMATION = 'information'
+    INFORMATION = 'information',
+    CONFIRMATION = 'confirmation'
   }
   
   export interface ModalConfig {
     title: string;
     message: string;
     type: ModalType;
+    onConfirm?: () => void;
+    onCancel?: () => void;
   }
   
   interface ModalContextType {
